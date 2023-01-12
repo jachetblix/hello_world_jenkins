@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 first.py'
+                sh 'python3 main.py'
             }
         }
     }
