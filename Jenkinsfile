@@ -19,9 +19,7 @@ pipeline {
     stages {
         stage('Run Python Script') {
             steps {
-                script {
-                    sh 'python3 /Users/artyomegorov/Desktop/hello_world_jenkins/main.py'
-                }
+                sh 'python3 /Users/artyomegorov/Desktop/hello_world_jenkins/main.py'
             }
         }
     }
