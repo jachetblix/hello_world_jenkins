@@ -1,26 +1,23 @@
 pipeline {
     agent any
-      stages {
 
-        stage('SCM Checkout') {
-            steps {
-                  git branch: 'main', url: 'https://github.com/jachetblix/hello_world_jenkins.git'
-            }
-        }
+    stages {
         stage('Build') {
             steps {
-                sh 'python3 main.py'
+                sh 'python3 -m venv venv'
+                sh '. venv/bin/activate'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'pytest'
+            }
+        }
+        stage('Run') {
+            steps {
+                sh 'python main1.py'
             }
         }
     }
 }
-// pipeline {
-//     agent any
-//     stages {
-//         stage('Run Python Script') {
-//             steps {
-//                 sh 'python3 /Users/artyomegorov/Desktop/hello_world_jenkins/main.py'
-//             }
-//         }
-//     }
-// }
