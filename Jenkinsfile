@@ -1,12 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.8-alpine'
+            args '-p 5000:5000'
+        }
+    }
 
     stages {
         stage('Build') {
             steps {
-                sh 'python3 -m venv venv'
-                sh '. venv/bin/activate'
-                sh 'sudo pip3 install -r requirements.txt'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
@@ -14,9 +17,16 @@ pipeline {
                 sh 'pytest'
             }
         }
-        stage('Run') {
+        stage('Docker Build') {
             steps {
-                sh 'python main1.py'
+                script {
+                    docker.build("myflaskapp:latest")
+                }
+            }
+        }
+        stage('Docker Run') {
+            steps {
+                sh 'docker run -d -p 5000:5000 myflaskapp:latest'
             }
         }
     }
